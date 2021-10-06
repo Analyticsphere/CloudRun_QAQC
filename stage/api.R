@@ -8,9 +8,18 @@ library(withr)
 library(tibble)
 library(rio)
 
-#* Runs STAGE qa_qc
+
+
+#* heartbeat...
 #* @get /
 #* @post /
+function(){
+  return("alive")
+}
+
+#* Runs STAGE qa_qc
+#* @get /qaqc
+#* @post /qaqc
 function() {
   #  read dictionary from bucket to an R object (warning, don't run out of RAM if its a big object)
   # the download type is guessed into an appropriate R object
