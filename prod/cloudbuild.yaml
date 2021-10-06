@@ -1,13 +1,13 @@
 steps:
  # Build the container image
  - name: 'gcr.io/cloud-builders/docker'
-   args: ['build', '-t', 'gcr.io/nih-nci-dceg-druss/test-api:$COMMIT_SHA', '.']
+   args: ['build','-f prod/Dockerfile' -t', 'gcr.io/nih-nci-dceg-connect-prod-6d04/qaqc-api:$COMMIT_SHA', '.']
  # Push the container image to Container Registry
  - name: 'gcr.io/cloud-builders/docker'
-   args: ['push', 'gcr.io/nih-nci-dceg-druss/test-api:$COMMIT_SHA']
+   args: ['push', 'gcr.io/nih-nci-dceg-connect-prod-6d04/qaqc-api:$COMMIT_SHA']
  # Deploy container image to Cloud Run
  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
    entrypoint: gcloud
-   args: ['run','deploy','test-api','--image=gcr.io/nih-nci-dceg-druss/test-api:$COMMIT_SHA','--region=us-central1']
+   args: ['run','deploy','qaqc-api','--image=gcr.io/nih-nci-dceg-connect-prod-6d04/qaqc-api:$COMMIT_SHA','--region=us-central1']
 images:
- - 'gcr.io/nih-nci-dceg-druss/test-api:$COMMIT_SHA'
+ - 'gcr.io/nih-nci-dceg-connect-prod-6d04/qaqc-api:$COMMIT_SHA'
