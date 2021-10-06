@@ -1,7 +1,8 @@
 steps:
  # Build the container image
  - name: 'gcr.io/cloud-builders/docker'
-   args: ['build','-f /stage/Dockerfile','-t', 'gcr.io/nih-nci-dceg-connect-stg-5519/qaqc-api:$COMMIT_SHA', '.']
+   args: ['build','-t', 'gcr.io/nih-nci-dceg-connect-stg-5519/qaqc-api:$COMMIT_SHA', '.']
+   dir: 'stage'
  # Push the container image to Container Registry
  - name: 'gcr.io/cloud-builders/docker'
    args: ['push', 'gcr.io/nih-nci-dceg-connect-stg-5519/qaqc-api:$COMMIT_SHA']
