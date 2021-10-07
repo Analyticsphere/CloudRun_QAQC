@@ -20,7 +20,11 @@ function(){
 #* Runs PROD qa_qc
 #* @get /qaqc
 #* @post /qaqc
+#* @serializer json
 function() {
+  retVal=list()
+  tryCatch(
+    {
   #  read dictionary from bucket to an R object (warning, don't run out of RAM if its a big object)
   # the download type is guessed into an appropriate R object
   dictionary = rio::import("https://episphere.github.io/conceptGithubActions/aggregate.json",format = "json")
@@ -48,58 +52,62 @@ function() {
   # define site to run QC -----------
   # Sanford
   site= 657167265 
-  runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
+  retval['Sanford']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
   
   # define site to run QC----------
   # HealthPartners
   site= 531629870 
-  runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
+  retval['HealthPartners']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
   
   # define site to run QC----------
   # Henry Ford Health System
   site= 548392715 
-  runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
+  retval['HFHS']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
   
   # define site to run QC----------
   # Kaiser Permanente Colorado
   site= 125001209 
-  runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
+  retval['KPCO']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
   
   # define site to run QC----------
   # Kaiser Permanente Georgia
   site= 327912200 
-  runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
+  retval['KPGA']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
   
   # define site to run QC----------
   # Kaiser Permanente Hawaii
   site= 300267574 
-  runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
+  retval['KPHI']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
   
   # define site to run QC----------
   # Kaiser Permanente Northwest
   site= 452412599 
-  runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
+  retval['KPNW']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
   
   # define site to run QC----------
   # Marshfiled
   site= 303349821 
-  runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
+  retval['Marshfield']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
   
   # define site to run QC----------
   # University of Chicago Medicine
   site= 809703864 
-  runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
+  retval['UC']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
   
   # define site to run QC----------
   # National Cancer Institute
   site= 517700004 
-  runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
+  retval['NCI']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
   
   # define site to run QC----------
   # Other
   site= 181769837 
-  runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
-  
+  retval['OTHER']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
+  },
+  error=function(e){
+    retVal$error = e
+  })
+  return(retVal)
 }
 
 
