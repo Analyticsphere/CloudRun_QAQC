@@ -207,6 +207,12 @@ numbers_only <- function(x) !grepl("\\D", x)
 # function to run QC by site--------------------------------------------
 runQC = function(site,project, sql, QC_report_location, dictionary ){
   bq_auth()
+  if (!bq_has_token()){
+    return( "Do not have a token. Cannot access BQ")
+  }else{
+    decode_jwt(bq_token()$auth_token)
+  }
+  
   #GET RECRUITMENT TABLES FROM BIGQUERY IN PROD PROJECT
   # set project
   project <- project
@@ -6285,3 +6291,19 @@ runQC = function(site,project, sql, QC_report_location, dictionary ){
 }
 
 
+decode_jwt <- function(token){
+  isToken <- "Token" %in% class(token)
+  if (isToken){
+    (strings <- strsplit(token$credentials$id_token, ".", fixed = TRUE)[[1]])
+  }else{
+    (strings <- strsplit(token, ".", fixed = TRUE)[[1]])
+  }
+  ##(strings <- strsplit(token$credentials$id_token, ".", fixed = TRUE)[[1]])
+  cat(rawToChar(jose::base64url_decode(strings[1])),"\n")
+  cat(rawToChar(jose::base64url_decode(strings[2])),"\n")
+  exp = as.numeric( fromJSON( rawToChar(jose::base64url_decode(strings[2]) ))$exp )
+  cat("==== \n")
+  cat("expires: ",format( lubridate::as_datetime(1632873429),usetz=TRUE ),"\n"  )
+  cat("==== \n")
+  cat(strings[3],"\n")
+}
