@@ -208,7 +208,7 @@ numbers_only <- function(x) !grepl("\\D", x)
 runQC = function(site,project, sql, QC_report_location, dictionary ){
   bq_auth()
   if (!bq_has_token()){
-    return( "Do not have a token. Cannot access BQ")
+    warning( "Does not have a token. Cannot access BQ")
   }else{
     decode_jwt(bq_token()$auth_token)
   }
