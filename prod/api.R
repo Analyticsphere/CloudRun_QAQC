@@ -20,10 +20,16 @@ function(){
 #* @get /debug
 #* @post /debug
 function(){
-  bq_auth()
-  token = bq_token()
-  print(bq_has_token())
-  print(decode_jwt(token$auth_token))
+  tryCatch({
+    bq_auth()
+    token = bq_token()
+    print(bq_has_token())
+    print(decode_jwt(token$auth_token))
+  },
+  error=function(){
+    cat("ERROR ",e,"\n")
+  }
+  )
 }
 
 #* Runs PROD qa_qc
@@ -43,91 +49,91 @@ function() {
       }
       return()  
       
-  #  read dictionary from bucket to an R object (warning, don't run out of RAM if its a big object)
-  # the download type is guessed into an appropriate R object
-  dictionary = rio::import("https://episphere.github.io/conceptGithubActions/aggregate.json",format = "json")
-  retval["dictLen"] = length(dictionary)
-  
-  # BigQuery table where QC report will be saved---------------
-  QC_report_location = "nih-nci-dceg-connect-prod-6d04.Connect.QC_report"
-  
-  # 2 part definition for querying the data sitting in BigQuery
-  project = "nih-nci-dceg-connect-prod-6d04"
-  sql = "SELECT * FROM `nih-nci-dceg-connect-prod-6d04.Connect.recruitment2`"
-  
-  # sites:
-  # Sanford Health = 657167265
-  # HealthPartners = 531629870
-  # Henry Ford Health System = 548392715
-  # Kaiser Permanente Colorado = 125001209
-  # Kaiser Permanente Georgia = 327912200
-  # Kaiser Permanente Hawaii = 300267574
-  # Kaiser Permanente Northwest = 452412599
-  # Marshfiled = 303349821
-  # University of Chicago Medicine = 809703864
-  # National Cancer Institute = 517700004
-  # Other = 181769837
-  
-  # define site to run QC -----------
-  # Sanford
-  site= 657167265 
-  retval['Sanford']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
-  
-  # define site to run QC----------
-  # HealthPartners
-  site= 531629870 
-  retval['HealthPartners']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
-  
-  # define site to run QC----------
-  # Henry Ford Health System
-  site= 548392715 
-  retval['HFHS']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
-  
-  # define site to run QC----------
-  # Kaiser Permanente Colorado
-  site= 125001209 
-  retval['KPCO']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
-  
-  # define site to run QC----------
-  # Kaiser Permanente Georgia
-  site= 327912200 
-  retval['KPGA']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
-  
-  # define site to run QC----------
-  # Kaiser Permanente Hawaii
-  site= 300267574 
-  retval['KPHI']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
-  
-  # define site to run QC----------
-  # Kaiser Permanente Northwest
-  site= 452412599 
-  retval['KPNW']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
-  
-  # define site to run QC----------
-  # Marshfiled
-  site= 303349821 
-  retval['Marshfield']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
-  
-  # define site to run QC----------
-  # University of Chicago Medicine
-  site= 809703864 
-  retval['UC']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
-  
-  # define site to run QC----------
-  # National Cancer Institute
-  site= 517700004 
-  retval['NCI']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
-  
-  # define site to run QC----------
-  # Other
-  site= 181769837 
-  retval['OTHER']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
-  },
-  error=function(e){
-    message("caught error ",e)
-    retval['note'] = paste0("caught error: ",e)
-    retval['error'] = e
-  })
+      #  read dictionary from bucket to an R object (warning, don't run out of RAM if its a big object)
+      # the download type is guessed into an appropriate R object
+      dictionary = rio::import("https://episphere.github.io/conceptGithubActions/aggregate.json",format = "json")
+      retval["dictLen"] = length(dictionary)
+      
+      # BigQuery table where QC report will be saved---------------
+      QC_report_location = "nih-nci-dceg-connect-prod-6d04.Connect.QC_report"
+      
+      # 2 part definition for querying the data sitting in BigQuery
+      project = "nih-nci-dceg-connect-prod-6d04"
+      sql = "SELECT * FROM `nih-nci-dceg-connect-prod-6d04.Connect.recruitment2`"
+      
+      # sites:
+      # Sanford Health = 657167265
+      # HealthPartners = 531629870
+      # Henry Ford Health System = 548392715
+      # Kaiser Permanente Colorado = 125001209
+      # Kaiser Permanente Georgia = 327912200
+      # Kaiser Permanente Hawaii = 300267574
+      # Kaiser Permanente Northwest = 452412599
+      # Marshfiled = 303349821
+      # University of Chicago Medicine = 809703864
+      # National Cancer Institute = 517700004
+      # Other = 181769837
+      
+      # define site to run QC -----------
+      # Sanford
+      site= 657167265 
+      retval['Sanford']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
+      
+      # define site to run QC----------
+      # HealthPartners
+      site= 531629870 
+      retval['HealthPartners']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
+      
+      # define site to run QC----------
+      # Henry Ford Health System
+      site= 548392715 
+      retval['HFHS']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
+      
+      # define site to run QC----------
+      # Kaiser Permanente Colorado
+      site= 125001209 
+      retval['KPCO']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
+      
+      # define site to run QC----------
+      # Kaiser Permanente Georgia
+      site= 327912200 
+      retval['KPGA']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
+      
+      # define site to run QC----------
+      # Kaiser Permanente Hawaii
+      site= 300267574 
+      retval['KPHI']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
+      
+      # define site to run QC----------
+      # Kaiser Permanente Northwest
+      site= 452412599 
+      retval['KPNW']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
+      
+      # define site to run QC----------
+      # Marshfiled
+      site= 303349821 
+      retval['Marshfield']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
+      
+      # define site to run QC----------
+      # University of Chicago Medicine
+      site= 809703864 
+      retval['UC']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
+      
+      # define site to run QC----------
+      # National Cancer Institute
+      site= 517700004 
+      retval['NCI']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
+      
+      # define site to run QC----------
+      # Other
+      site= 181769837 
+      retval['OTHER']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
+    },
+    error=function(e){
+      message("caught error ",e)
+      retval['note'] = paste0("caught error: ",e)
+      retval['error'] = e
+    })
   
   retval
 }
@@ -227,7 +233,7 @@ runQC = function(site,project, sql, QC_report_location, dictionary ){
   warning( "starting runQC")
   message(" QA/QC .... ",site)
   bq_auth()
-
+  
   #GET RECRUITMENT TABLES FROM BIGQUERY IN PROD PROJECT
   # set project
   project <- project
