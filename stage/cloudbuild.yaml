@@ -12,4 +12,4 @@ steps:
    entrypoint: gcloud
    args: ['run','deploy','qaqc-api','--image=gcr.io/nih-nci-dceg-connect-stg-5519/qaqc-api:$COMMIT_SHA','--region=us-central1','--service-account=qa-qc-stage@nih-nci-dceg-connect-stg-5519.iam.gserviceaccount.com']
 images:
- - 'gcr.io/nih-nci-dceg-druss/qaqc-api:$COMMIT_SHA'
+ - 'gcr.io/nih-nci-dceg-connect-stg-5519/qaqc-api:$COMMIT_SHA'

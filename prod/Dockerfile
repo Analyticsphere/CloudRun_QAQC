@@ -1,5 +1,4 @@
-FROM gcr.io/gcer-public/googlecloudrunner:master
-RUN install2.r tidyverse jsonlite
-COPY ["./", "./"]
-ENTRYPOINT ["R", "-e", "pr <- plumber::plumb(commandArgs()[4]); pr$run(host='0.0.0.0', port=as.numeric(Sys.getenv('PORT')))"]
-CMD ["api.R"]
+FROM rocker/tidyverse:latest
+RUN install2.r rio plumber bigrquery
+COPY ["./api.R", "./api.R"]
+ENTRYPOINT ["R", "-e","pr <- plumber::plumb('api.R'); pr$run(host='0.0.0.0', port=as.numeric(Sys.getenv('PORT')))"]

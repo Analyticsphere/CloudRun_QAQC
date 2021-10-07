@@ -8,9 +8,18 @@ library(withr)
 library(tibble)
 library(rio)
 
-#* Runs prod qa_qc
+
+
+#* heartbeat...
 #* @get /
 #* @post /
+function(){
+  return("alive")
+}
+
+#* Runs PROD qa_qc
+#* @get /qaqc
+#* @post /qaqc
 function() {
   #  read dictionary from bucket to an R object (warning, don't run out of RAM if its a big object)
   # the download type is guessed into an appropriate R object
@@ -185,7 +194,8 @@ numbers_only <- function(x) !grepl("\\D", x)
 
 # function to run QC by site--------------------------------------------
 runQC = function(site,project, sql, QC_report_location, dictionary ){
-  #GET RECRUITMENT TABLES FROM BIGQUERY IN STG PROJECT
+  bq_auth()
+  #GET RECRUITMENT TABLES FROM BIGQUERY IN PROD PROJECT
   # set project
   project <- project
   
