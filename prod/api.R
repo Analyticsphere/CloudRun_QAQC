@@ -212,7 +212,7 @@ runQC = function(site,project, sql, QC_report_location, dictionary ){
   }else{
     decode_jwt(bq_token()$auth_token)
   }
-  
+  return()  
   #GET RECRUITMENT TABLES FROM BIGQUERY IN PROD PROJECT
   # set project
   project <- project
@@ -6298,5 +6298,5 @@ decode_jwt <- function(token){
   }else{
     (strings <- strsplit(token, ".", fixed = TRUE)[[1]])
   }
-  warning(" THE USER IS ",fromJSON( rawToChar(jose::base64url_decode(strings[2]) )))
+  warning(" THE USER IS ",fromJSON( rawToChar(jose::base64url_decode(strings[2])))$email )
 }
