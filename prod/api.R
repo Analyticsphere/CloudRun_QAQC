@@ -17,6 +17,14 @@ function(){
   return("alive")
 }
 
+#* @get /debug
+#* @post /debug
+function(){
+  bq_auth()
+  token = bq_token()
+  print(bq_has_token())
+}
+
 #* Runs PROD qa_qc
 #* @get /qaqc
 #* @post /qaqc
