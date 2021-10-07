@@ -194,6 +194,7 @@ numbers_only <- function(x) !grepl("\\D", x)
 
 # function to run QC by site--------------------------------------------
 runQC = function(site,project, sql, QC_report_location, dictionary ){
+  bq_auth()
   #GET RECRUITMENT TABLES FROM BIGQUERY IN STG PROJECT
   # set project
   project <- project
