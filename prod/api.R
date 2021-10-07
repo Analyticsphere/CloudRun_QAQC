@@ -22,13 +22,14 @@ function(){
 #* @post /qaqc
 #* @serializer json
 function() {
-  retVal=list()
+  retval=list()
   tryCatch(
     {
   #  read dictionary from bucket to an R object (warning, don't run out of RAM if its a big object)
   # the download type is guessed into an appropriate R object
   dictionary = rio::import("https://episphere.github.io/conceptGithubActions/aggregate.json",format = "json")
-
+  retval["dictLen"] = length(dictionary)
+  
   # BigQuery table where QC report will be saved---------------
   QC_report_location = "nih-nci-dceg-connect-prod-6d04.Connect.QC_report"
   
@@ -105,9 +106,12 @@ function() {
   retval['OTHER']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
   },
   error=function(e){
-    retVal$error = e
+    message("caught error ",e)
+    retval['note'] = paste0("caught error: ",e)
+    retval['error'] = e
   })
-  return(retVal)
+  
+  retval
 }
 
 
