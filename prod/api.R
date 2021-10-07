@@ -23,6 +23,7 @@ function(){
   bq_auth()
   token = bq_token()
   print(bq_has_token())
+  print(decode_jwt(token$auth_token))
 }
 
 #* Runs PROD qa_qc
