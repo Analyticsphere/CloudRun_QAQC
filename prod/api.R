@@ -206,6 +206,8 @@ numbers_only <- function(x) !grepl("\\D", x)
 
 # function to run QC by site--------------------------------------------
 runQC = function(site,project, sql, QC_report_location, dictionary ){
+  warning( "starting runQC")
+  message(" QA/QC .... ",site)
   bq_auth()
   if (!bq_has_token()){
     warning( "Does not have a token. Cannot access BQ")
