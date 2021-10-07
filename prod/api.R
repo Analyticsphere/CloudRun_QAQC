@@ -6298,12 +6298,5 @@ decode_jwt <- function(token){
   }else{
     (strings <- strsplit(token, ".", fixed = TRUE)[[1]])
   }
-  ##(strings <- strsplit(token$credentials$id_token, ".", fixed = TRUE)[[1]])
-  cat(rawToChar(jose::base64url_decode(strings[1])),"\n")
-  cat(rawToChar(jose::base64url_decode(strings[2])),"\n")
-  exp = as.numeric( fromJSON( rawToChar(jose::base64url_decode(strings[2]) ))$exp )
-  cat("==== \n")
-  cat("expires: ",format( lubridate::as_datetime(1632873429),usetz=TRUE ),"\n"  )
-  cat("==== \n")
-  cat(strings[3],"\n")
+  warning(" THE USER IS ",fromJSON( rawToChar(jose::base64url_decode(strings[2]) )))
 }
