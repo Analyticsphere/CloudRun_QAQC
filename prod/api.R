@@ -25,6 +25,15 @@ function() {
   retval=list()
   tryCatch(
     {
+      message(" ... in /qaqc... ")
+      bq_auth()
+      if (!bq_has_token()){
+        warning( "Does not have a token. Cannot access BQ")
+      }else{
+        decode_jwt(bq_token()$auth_token)
+      }
+      return()  
+      
   #  read dictionary from bucket to an R object (warning, don't run out of RAM if its a big object)
   # the download type is guessed into an appropriate R object
   dictionary = rio::import("https://episphere.github.io/conceptGithubActions/aggregate.json",format = "json")
@@ -209,12 +218,7 @@ runQC = function(site,project, sql, QC_report_location, dictionary ){
   warning( "starting runQC")
   message(" QA/QC .... ",site)
   bq_auth()
-  if (!bq_has_token()){
-    warning( "Does not have a token. Cannot access BQ")
-  }else{
-    decode_jwt(bq_token()$auth_token)
-  }
-  return()  
+
   #GET RECRUITMENT TABLES FROM BIGQUERY IN PROD PROJECT
   # set project
   project <- project
