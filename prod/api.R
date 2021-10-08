@@ -19,15 +19,16 @@ function(){
 
 #* @get /debug
 #* @post /debug
+#* @serializer json
 function(){
   xx =list(indebug=TRUE)
   tryCatch({
     xx$start=TRUE
-    cat("hi there.  Attempt to login...")
+    cat("Attempting to aquire token ...\n")
     bq_auth()
     token = bq_token()
-    print(token)
-    print(bq_has_token())
+    xx$have_token=bq_has_token()
+    cat("\tDo I have a token: ",xx$have_token,"\n")
     xx$done=TRUE
   },
   error=function(){
@@ -45,8 +46,6 @@ function() {
   retval=list()
   tryCatch(
     {
-      message(" ... in /qaqc... ")
-
       #  read dictionary from bucket to an R object (warning, don't run out of RAM if its a big object)
       # the download type is guessed into an appropriate R object
       dictionary = rio::import("https://episphere.github.io/conceptGithubActions/aggregate.json",format = "json")
@@ -133,7 +132,7 @@ function() {
       retval['error'] = e
     })
   
-  retval
+  toJSON(retval,auto_unbox = T)
 }
 
 
@@ -6307,17 +6306,4 @@ runQC = function(site,project, sql, QC_report_location, dictionary ){
                   create_disposition="CREATE_IF_NEEDED",
                   write_disposition="WRITE_APPEND")
   return(qc_errors)
-}
-
-
-decode_jwt <- function(token){
-  message(" IS TOKEN NA: ",is.na(token),"  OR NULL ",is.null(token))
-  isToken <- "Token" %in% class(token)
-  message("IS TOKEN: ",isToken)
-  if (isToken){
-    (strings <- strsplit(token$credentials$id_token, ".", fixed = TRUE)[[1]])
-  }else{
-    (strings <- strsplit(token, ".", fixed = TRUE)[[1]])
-  }
-  warning(" THE USER IS ",fromJSON( rawToChar(jose::base64url_decode(strings[2])))$email )
 }
