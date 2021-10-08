@@ -20,16 +20,22 @@ function(){
 #* @get /debug
 #* @post /debug
 function(){
+  xx =list(indebug=TRUE)
   tryCatch({
+    xx$start=TRUE
+    cat("hi there.  Attempt to login...")
     bq_auth()
     token = bq_token()
+    print(token)
     print(bq_has_token())
     print(decode_jwt(token$auth_token))
+    xx$done=TRUE
   },
   error=function(){
     cat("ERROR ",e,"\n")
   }
   )
+  toJSON(xx,auto_unbox = T)
 }
 
 #* Runs PROD qa_qc
@@ -6313,7 +6319,9 @@ runQC = function(site,project, sql, QC_report_location, dictionary ){
 
 
 decode_jwt <- function(token){
+  message(" IS TOKEN NA: ",is.na(token),"  OR NULL ",is.null(token))
   isToken <- "Token" %in% class(token)
+  message("IS TOKEN: ",isToken)
   if (isToken){
     (strings <- strsplit(token$credentials$id_token, ".", fixed = TRUE)[[1]])
   }else{
