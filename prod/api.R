@@ -46,12 +46,6 @@ function() {
   tryCatch(
     {
       message(" ... in /qaqc... ")
-      bq_auth()
-      if (!bq_has_token()){
-        warning( "Does not have a token. Cannot access BQ")
-      }else{
-        decode_jwt(bq_token()$auth_token)
-      }
 
       #  read dictionary from bucket to an R object (warning, don't run out of RAM if its a big object)
       # the download type is guessed into an appropriate R object
