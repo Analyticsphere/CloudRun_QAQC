@@ -28,7 +28,6 @@ function(){
     token = bq_token()
     print(token)
     print(bq_has_token())
-    print(decode_jwt(token$auth_token))
     xx$done=TRUE
   },
   error=function(){
@@ -53,8 +52,7 @@ function() {
       }else{
         decode_jwt(bq_token()$auth_token)
       }
-      return()  
-      
+
       #  read dictionary from bucket to an R object (warning, don't run out of RAM if its a big object)
       # the download type is guessed into an appropriate R object
       dictionary = rio::import("https://episphere.github.io/conceptGithubActions/aggregate.json",format = "json")
