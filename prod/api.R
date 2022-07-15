@@ -75,52 +75,115 @@ function() {
       # Sanford
       site= 657167265 
       retval['Sanford']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
-      
+    },
+    error=function(e){
+      message("caught error ",e)
+      retval['note'] = paste0("caught error: ",e)
+      retval['error'] = e
+    })
+  tryCatch(
+    {
       # define site to run QC----------
       # HealthPartners
       site= 531629870 
       retval['HealthPartners']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
-      
+    },error=function(e){
+      message("caught error ",e)
+      retval['note'] = paste0("caught error: ",e)
+      retval['error'] = e
+    })
+  tryCatch(
+    {
       # define site to run QC----------
       # Henry Ford Health System
       site= 548392715 
       retval['HFHS']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
-      
+    },error=function(e){
+      message("caught error ",e)
+      retval['note'] = paste0("caught error: ",e)
+      retval['error'] = e
+    })  
+  tryCatch(
+    {
       # define site to run QC----------
       # Kaiser Permanente Colorado
       site= 125001209 
       retval['KPCO']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
-      
+    },error=function(e){
+      message("caught error ",e)
+      retval['note'] = paste0("caught error: ",e)
+      retval['error'] = e
+    })
+  tryCatch(
+    {
       # define site to run QC----------
       # Kaiser Permanente Georgia
       site= 327912200 
       retval['KPGA']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
-      
+    },error=function(e){
+      message("caught error ",e)
+      retval['note'] = paste0("caught error: ",e)
+      retval['error'] = e
+    })
+  tryCatch(
+    {
       # define site to run QC----------
       # Kaiser Permanente Hawaii
       site= 300267574 
       retval['KPHI']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
-      
+    },error=function(e){
+      message("caught error ",e)
+      retval['note'] = paste0("caught error: ",e)
+      retval['error'] = e
+    })
+  tryCatch(
+    {
       # define site to run QC----------
       # Kaiser Permanente Northwest
       site= 452412599 
       retval['KPNW']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
-      
+    },error=function(e){
+      message("caught error ",e)
+      retval['note'] = paste0("caught error: ",e)
+      retval['error'] = e
+    })
+  tryCatch(
+    {
       # define site to run QC----------
       # Marshfiled
       site= 303349821 
       retval['Marshfield']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
-      
+    },error=function(e){
+      message("caught error ",e)
+      retval['note'] = paste0("caught error: ",e)
+      retval['error'] = e
+    })
+  
+  tryCatch(
+    {
       # define site to run QC----------
       # University of Chicago Medicine
       site= 809703864 
       retval['UC']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
-      
+    },error=function(e){
+      message("caught error ",e)
+      retval['note'] = paste0("caught error: ",e)
+      retval['error'] = e
+    })
+  
+  tryCatch(
+    {
       # define site to run QC----------
       # National Cancer Institute
       site= 517700004 
       retval['NCI']=runQC(site= site, project= project, sql= sql, QC_report_location = QC_report_location, dictionary=dictionary)
-      
+    },error=function(e){
+      message("caught error ",e)
+      retval['note'] = paste0("caught error: ",e)
+      retval['error'] = e
+    })
+  tryCatch(
+    {
       # define site to run QC----------
       # Other
       site= 181769837 
