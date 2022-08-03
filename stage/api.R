@@ -218,7 +218,7 @@ runQC = function(site,project, sql, QC_report_location, dictionary ){
   # Other = 181769837
   
   # choose CID from above to filter by site
-  site= 657167265
+  site= site
   connectData = connectData[connectData$d_827220437 == site & !is.na(connectData$d_827220437),]   
   #connectData = connectData %>% mutate(across(everything(), as.character)) # added 0527 to change int64 to string, but using newer version below 
   
