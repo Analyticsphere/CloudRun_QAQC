@@ -26,7 +26,7 @@ function() {
   dictionary = rio::import("https://episphere.github.io/conceptGithubActions/aggregate.json",format = "json")
 
   # BigQuery table where QC report will be saved---------------
-  QC_report_location = "nih-nci-dceg-connect-stg-5519.Connect.QC_report_Jing"
+  QC_report_location = "nih-nci-dceg-connect-stg-5519.recruitment.QC_report_Jing"
   
   # 2 part definition for querying the data sitting in BigQuery
   project = "nih-nci-dceg-connect-stg-5519"
