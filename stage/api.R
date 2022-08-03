@@ -6244,10 +6244,11 @@ runQC = function(site,project, sql, QC_report_location, dictionary ){
   
   # TRANSLATE REPORT 
   
-  qc_errors=TRANSLATE.COL(report= qc_errors , 
-                          translate.these.cols = c("ConceptID", "valid_values"),
-                          new.col.names = c("ConceptID_translated","valid_values_translated"),
-                          dictionary = dictionary)
+  # qc_errors=TRANSLATE.COL(report= qc_errors , 
+  #                         translate.these.cols = c("ConceptID", "valid_values"),
+  #                         new.col.names = c("ConceptID_translated","valid_values_translated"),
+  #                         dictionary = dictionary)
+  
   
   # add "no errors found" row if no rows found in QC report
   if (nrow(qc_errors)==0){
