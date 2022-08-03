@@ -30,7 +30,7 @@ function() {
   
   # 2 part definition for querying the data sitting in BigQuery
   project = "nih-nci-dceg-connect-stg-5519"
-  sql = "SELECT * FROM `nih-nci-dceg-connect-stg-5519.Connect.recruitment1_WL`"
+  sql = "SELECT * FROM `nih-nci-dceg-connect-stg-5519.recruitment.recruitment1_WL`"
   
   # sites:
   # Sanford Health = 657167265
